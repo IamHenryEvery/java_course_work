@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<BorderPane xmlns:fx="http://javafx.com/javafx" xmlns="http://javafx.com/javafx"
+            fx:controller="org.example.autopark_client.controller.AdminController"
+            stylesheets="@AdminView.css">
+
+    <!-- Верхняя панель с кнопками навигации -->
+    <top>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <MenuButton text="Пользователи">
+                    <items>
+                        <MenuItem text="Просмотр пользователей" onAction="#showUsersTable"/>
+                        <MenuItem text="Создание пользователя" onAction="#showCreateUserForm"/>
+                    </items>
+                </MenuButton>
+                <Button text="Автомобили" onAction="#showCarsTable"/>
+                <Button text="Бронирования" onAction="#showBookingsTable"/>
+                <Button text="Об авторе" onAction="#showAboutAuthor" alignment="CENTER_RIGHT" style="-fx-alignment: center-right;" />
+            </HBox>
+
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Поиск пользователя:"/>
+                <TextField fx:id="searchUserField" promptText="Введите username"/>
+                <Button text="Искать" onAction="#searchUserByUsername"/>
+            </HBox>
+
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label text="Поиск бронирований"/>
+                <TextField fx:id="searchIdField" promptText="Введите ID пользователя"/>
+                <Button text="Искать" onAction="#searchBookingsByUserId"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Центр с таблицами -->
+    <center>
+        <StackPane fx:id="tablePane" style="-fx-padding: 10;">
+            <!-- Таблица пользователей -->
+            <TableView fx:id="usersTable" visible="false">
+                <columns>
+                    <TableColumn text="ID" fx:id="userIdColumn"/>
+                    <TableColumn text="Имя" fx:id="usernameColumn"/>
+                    <TableColumn text="Пароль" fx:id="passwordColumn"/>
+                    <TableColumn text="Тип пользователя" fx:id="UserRoleColumn"/>
+                </columns>
+            </TableView>
+
+            <!-- Форма создания пользователя -->
+            <VBox fx:id="createUserPane" spacing="10" visible="false" managed="false">
+                <Label text="Создание нового пользователя" style="-fx-font-weight: bold;"/>
+                <HBox spacing="10">
+                    <Label text="Имя пользователя:"/>
+                    <TextField fx:id="usernameField"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Пароль:"/>
+                    <PasswordField fx:id="passwordField"/>
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Роль:"/>
+                    <ChoiceBox fx:id="roleChoiceBox">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="ADMIN"/>
+                                <String fx:value="CUSTOMER"/>
+                            </FXCollections>
+                        </items>
+                    </ChoiceBox>
+                </HBox>
+                <Button text="Создать пользователя" onAction="#createUser"/>
+            </VBox>
+
+            <!-- Таблица автомобилей -->
+            <TableView fx:id="carsTable" visible="false">
+                <columns>
+                    <TableColumn text="ID" fx:id="carIdColumn"/>
+                    <TableColumn text="Марка" fx:id="carBrandColumn"/>
+                    <TableColumn text="Модель" fx:id="carModelColumn"/>
+                    <TableColumn text="Год" fx:id="carYearColumn"/>
+                    <TableColumn text="Цена за день" fx:id="carPricePerDayColumn"/>
+                    <TableColumn text="Доступен" fx:id="carAvailableColumn"/>
+                </columns>
+            </TableView>
+
+            <!-- Таблица бронирования -->
+            <TableView fx:id="bookingsTable" visible="false">
+                <columns>
+                    <TableColumn text="ID" fx:id="bookingIdColumn"/>
+                    <TableColumn text="ID Пользователя" fx:id="bookingUserIdColumn"/>
+                    <TableColumn text="ID автомобиля" fx:id="bookingCarIdColumn"/>
+                    <TableColumn text="Начало бронирования" fx:id="bookingStartDateColumn"/>
+                    <TableColumn text="Конец бронирования" fx:id="bookingEndDateColumn"/>
+                </columns>
+            </TableView>
+        </StackPane>
+    </center>
+
+    <!-- Нижняя панель -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" style="-fx-padding: 10;">
+            <Button text="Назад" onAction="#switchToMain" styleClass="exit-button"/>
+        </HBox>
+    </bottom>
+</BorderPane>

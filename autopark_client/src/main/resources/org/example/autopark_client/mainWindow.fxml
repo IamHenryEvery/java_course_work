@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+        <?import javafx.scene.control.*?>
+        <?import javafx.scene.layout.*?>
+
+
+<StackPane fx:id="mainPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="org.example.autopark_client.controller.MainController"
+           stylesheets="@MainView.css">
+    <!-- Логин -->
+    <VBox fx:id="loginPane" alignment="CENTER" spacing="10">
+        <Label text="Логин"/>
+        <TextField fx:id="loginUsernameField" promptText="Имя пользователя" style="-fx-max-width: 250px;"/>
+        <PasswordField fx:id="loginPasswordField" promptText="Пароль" style="-fx-max-width: 250px;"/>
+        <Button text="Войти" onAction="#handleLogin"/>
+        <Button text="Нет аккаунта? Зарегистрироваться" onAction="#switchToRegister"/>
+        <Label fx:id="loginErrorLabel" textFill="red"/>
+    </VBox>
+
+    <!-- Регистрация -->
+    <VBox fx:id="registerPane" alignment="CENTER" spacing="10" visible="false" managed="false">
+        <Label text="Регистрация"/>
+        <TextField fx:id="registerUsernameField" promptText="Имя пользователя" style="-fx-max-width: 250px;"/>
+        <PasswordField fx:id="registerPasswordField" promptText="Пароль" style="-fx-max-width: 250px;"/>
+        <PasswordField fx:id="registerConfirmPasswordField" promptText="Подтвердите пароль" style="-fx-max-width: 250px;"/>
+        <Button text="Зарегистрироваться" onAction="#handleRegister"/>
+        <Button text="Уже есть аккаунт? Войти" onAction="#switchToLogin"/>
+        <Label fx:id="registerErrorLabel" textFill="red"/>
+    </VBox>
+
+    <Pane  fx:id="mapPane">
+        <Button text="Выход" layoutX="740" layoutY="550" onAction="#handleLogout"/>
+        <Button fx:id="toAdminPanelButton" text="Панель администратора" layoutX="10" layoutY="10" visible="false" onAction="#switchToAdminPanel"/>
+        <Button text="Об авторе" onAction="#showAboutAuthor" layoutX="700" layoutY="10" />
+        <!-- Форма бронирования -->
+        <VBox fx:id="bookingFormPane" spacing="10" visible="false" managed="false">
+            <Label text="Выберите машину:" />
+            <ComboBox fx:id="carChoiceBox" />
+
+            <Label text="Дата начала:" />
+            <DatePicker fx:id="startDatePicker" />
+
+            <Label text="Дата окончания:" />
+            <DatePicker fx:id="endDatePicker" />
+
+            <Button text="Создать бронирование" onAction="#createBooking" />
+            <Button text="Отмена" onAction="#resetBookingForm" />
+        </VBox>
+
+        <!-- Таблица бронирований -->
+        <TableView fx:id="bookingsTable" visible="false">
+            <columns>
+                <TableColumn text="ID" fx:id="bookingIdColumn"/>
+                <TableColumn text="ID Пользователя" fx:id="bookingUserIdColumn"/>
+                <TableColumn text="ID автомобиля" fx:id="bookingCarIdColumn"/>
+                <TableColumn text="Начало бронирования" fx:id="bookingStartDateColumn"/>
+                <TableColumn text="Конец бронирования" fx:id="bookingEndDateColumn"/>
+            </columns>
+        </TableView>
+
+        <!-- Кнопки для пользователя -->
+        <Button text="Создать бронирование" layoutX="520" layoutY="100" onAction="#showBookingForm" />
+    </Pane>
+
+</StackPane>
